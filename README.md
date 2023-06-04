@@ -1,2 +1,1 @@
-# multitask_fon
-Toward MultiTask Model for Fon Language
+Toward Building a Multi-Task Learning Model for Fon Language
