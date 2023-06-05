@@ -52,11 +52,11 @@ dev_dataloader_ner = DataLoader(dev_dataset[0], batch_size=dev_batch_size*4, shu
 dev_dataloader_pos = DataLoader(dev_dataset[1], shuffle=False, batch_size=dev_batch_size)
 
 # define the model
-
+seq_length_ner, seq_length_pos = 0, 0
 for batches in zip(train_dataloader_ner, train_dataloader_pos):
     ner_batch, pos_batch = batches
     seq_length_ner = ner_batch[0].shape[-1]
-    seq_length_pos = ner_batch[0].shape[-1]
+    seq_length_pos = pos_batch[0].shape[-1]
     break
 
 model = MultiTaskModel(encoder, num_labels=[num_labels_ner, num_labels_pos],

@@ -265,11 +265,11 @@ class FonDataset(Dataset):
 
 # A simple MultiTask Model that uses a shared encoder (here an LM)
 class MultiTaskModel(torch.nn.Module):
-    def __init__(self, encoder, num_labels, sequence_length):
+    def __init__(self, encoder, num_labels, sequence_lengths):
         super(MultiTaskModel,self).__init__()
         self.encoder = encoder
         self.n_labels_task1, self.n_labels_task2 = num_labels
-        self.seq_len_1, self.seq_len_2 = sequence_length
+        self.seq_len_1, self.seq_len_2 = sequence_lengths
         
         self.fc1 = torch.nn.Linear(768, self.seq_len_1)
         self.fc2 = torch.nn.Linear(768, self.seq_len_2)
