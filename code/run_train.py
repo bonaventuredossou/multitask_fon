@@ -59,8 +59,8 @@ for batches in zip(train_dataloader_ner, train_dataloader_pos):
     seq_length_pos = pos_batch[0].shape[-1]
     break
 
-model = MultiTaskModel(encoder, num_labels=[num_labels_ner, num_labels_pos],
-                       sequence_lengths=[seq_length_ner, seq_length_pos])
+model = MultiTaskModel(encoder, [num_labels_ner, num_labels_pos],
+                       [seq_length_ner, seq_length_pos])
 model = to_device(model, num_gpus, device)
 
 num_train_epochs = 50
@@ -102,7 +102,7 @@ for epoch in range(num_train_epochs):
         pos_ratio = len(pos_batch)/total_data
 
         loss = (ner_ratio*loss_t1) + (pos_ratio*loss_t2)
-        loss.backwards()
+        loss.backward()
         optimizer.step()
         
         epoch_train_loss += loss.item()
