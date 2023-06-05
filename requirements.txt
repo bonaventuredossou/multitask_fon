@@ -1,0 +1,10 @@
+transformers
+seqeval
+ptvsd
+torch
+sentencepiece
+numpy
+torchtext
+torchaudio
+torchvision
+logging
