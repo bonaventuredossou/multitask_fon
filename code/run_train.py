@@ -4,6 +4,9 @@ import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader
 from transformers import XLMRobertaTokenizer, XLMRobertaModel
+import wandb
+
+wandb.init(project="multitask_fon")
 
 num_gpus = [i for i in range(torch.cuda.device_count())]
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -101,16 +104,17 @@ for epoch in range(num_train_epochs):
         loss_t2 = criterion(outputs_pos, pos_batch[3])
         
         # batches typically have != length so we weight the final loss accordingly
-        ner_ratio = len(ner_batch)/total_data
-        pos_ratio = len(pos_batch)/total_data
+        # ner_ratio = len(ner_batch)/total_data
+        # pos_ratio = len(pos_batch)/total_data
 
-        loss = (ner_ratio*loss_t1) + (pos_ratio*loss_t2)
+        loss = loss_t1 + loss_t2
         loss.backward()
         optimizer.step()
         
         epoch_train_loss += loss.item()
     
     epoch_train_loss = epoch_train_loss / total_data
+    wandb.log({"train_loss": epoch_train_loss, "epoch": epoch + 1})
     print("Epoch {}'s training loss: {}".format(epoch +1, epoch_train_loss))
     
     # evaluation
@@ -143,10 +147,11 @@ for epoch in range(num_train_epochs):
         # batches typically have != length so we weight the final loss accordingly
         dev_ner_ratio = len(dev_ner_batch)/dev_total_data
         dev_pos_ratio = len(dev_pos_batch)/dev_total_data
-        dev_loss = (dev_ner_ratio*dev_loss_t1) + (dev_pos_ratio*dev_loss_t2)
+        dev_loss = dev_loss_t1 + dev_loss_t2
         epoch_dev_loss += dev_loss.item()
     
     epoch_dev_loss = epoch_dev_loss / dev_total_data
+    wandb.log({"dev_loss": epoch_dev_loss, "epoch": epoch + 1})
     
     if epoch_dev_loss < best_dev_loss:
         best_dev_loss = epoch_dev_loss
