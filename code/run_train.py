@@ -111,7 +111,7 @@ for epoch in range(num_train_epochs):
         epoch_train_loss += loss.item()
     
     epoch_train_loss = epoch_train_loss / total_data
-    print("Epoch {}'s training loss: {}".format(epoch_train_loss))
+    print("Epoch {}'s training loss: {}".format(epoch +1, epoch_train_loss))
     
     # evaluation
     # set the model to eval mode
@@ -152,6 +152,6 @@ for epoch in range(num_train_epochs):
         best_dev_loss = epoch_dev_loss
         path = os.path.join('../models/multitask_model_fon.bin')
         torch.save(model.state_dict(), path)  
-    print("Epoch {}'s validation loss: {}".format(epoch_dev_loss))
+    print("Epoch {}'s validation loss: {}".format(epoch + 1, epoch_dev_loss))
 
 print('Best validation loss: {}'.format(best_dev_loss))
