@@ -274,9 +274,10 @@ class MultiTaskModel(torch.nn.Module):
         self.fc1 = torch.nn.Linear(768, self.seq_len_1)
         self.fc2 = torch.nn.Linear(768, self.seq_len_2)
         
-        self.classifier_task1 = torch.nn.Linear(self.seq_len_1**2, self.n_labels_task1)
-        self.classifier_task2 = torch.nn.Linear(self.seq_len_2**2, self.n_labels_task2)
-    
+        self.classifier_task1 = torch.nn.Linear(self.seq_len_1, self.n_labels_task1)
+        self.classifier_task2 = torch.nn.Linear(self.seq_len_2, self.n_labels_task2)
+
+        
     def forward(self, x1, x2):
         # Inputs of each task
         # same models but with different configurations i.e. number of labels
@@ -288,6 +289,9 @@ class MultiTaskModel(torch.nn.Module):
         
         task1_pred = self.classifier_task1(representation_x1)
         task2_pred = self.classifier_task2(representation_x2)
+        
+        task1_pred = task1_pred.transpose(1, 2)
+        task2_pred = task2_pred.transpose(1, 2)
         
         return task1_pred, task2_pred
 
