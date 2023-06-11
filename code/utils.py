@@ -271,8 +271,7 @@ class MultiTaskModel(torch.nn.Module):
         self.n_labels_task1, self.n_labels_task2 = num_labels
         self.seq_len_1, self.seq_len_2 = sequence_lengths
         
-        self.dropout = torch.nn.Dropout(p=0.4)
-        self.activation = torch.nn.ReLU()
+        self.dropout = torch.nn.Dropout(p=0.3)
         
         self.fc1 = torch.nn.Linear(768, self.seq_len_1)
         self.fc2 = torch.nn.Linear(768, self.seq_len_2)
@@ -293,8 +292,8 @@ class MultiTaskModel(torch.nn.Module):
         task1_pred = self.classifier_task1(self.dropout(representation_x1))
         task2_pred = self.classifier_task2(self.dropout(representation_x2))
         
-        task1_pred = self.activation(task1_pred.transpose(1, 2))
-        task2_pred = self.activation(task2_pred.transpose(1, 2))
+        task1_pred = task1_pred.transpose(1, 2)
+        task2_pred = task2_pred.transpose(1, 2)
         
         return task1_pred, task2_pred
 

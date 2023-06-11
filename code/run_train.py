@@ -74,7 +74,7 @@ print("Num examples NER = %d", len(train_dataset[0]))
 print("Num examples POS = %d", len(train_dataset[1]))
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
-criterion = torch.nn.CrossEntropyLoss()
+criterion = torch.nn.CrossEntropyLoss(ignore_index=-100)
 best_dev_loss = 1000
 
 for epoch in range(num_train_epochs):
