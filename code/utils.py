@@ -286,8 +286,8 @@ class MultiTaskModel(torch.nn.Module):
         representation_x1 = self.fc1(representation_x1)
         representation_x2 = self.fc2(representation_x2)
         
-        task1_pred = self.classifier_task1(x1)
-        task2_pred = self.classifier_task2(x2)
+        task1_pred = self.classifier_task1(representation_x1)
+        task2_pred = self.classifier_task2(representation_x2)
         
         return task1_pred, task2_pred
 
