@@ -87,15 +87,18 @@ for epoch in range(num_train_epochs):
         ner_batch = tuple(t.to(device) for t in ner_batch)
         pos_batch = tuple(t.to(device) for t in pos_batch)
         
-        ner_inputs = {"input_ids": ner_batch[0], "attention_mask": ner_batch[1], "labels": ner_batch[3]}
-        pos_inputs = {"input_ids": pos_batch[0], "attention_mask": pos_batch[1], "labels": pos_batch[3]}
+        # ner_inputs = {"input_ids": ner_batch[0], "attention_mask": ner_batch[1], "labels": ner_batch[3]}
+        # pos_inputs = {"input_ids": pos_batch[0], "attention_mask": pos_batch[1], "labels": pos_batch[3]}
+
+        ner_inputs = {"input_ids": ner_batch[0], "attention_mask": ner_batch[1]}
+        pos_inputs = {"input_ids": pos_batch[0], "attention_mask": pos_batch[1]}
 
         ner_inputs["token_type_ids"] = ner_batch[2]
         pos_inputs["token_type_ids"] = pos_batch[2]
         
         outputs_ner, outputs_pos = model(ner_inputs, pos_inputs)
-        loss_t1 = criterion(outputs_ner, ner_inputs["labels"])
-        loss_t2 = criterion(outputs_pos, pos_inputs["labels"])
+        loss_t1 = criterion(outputs_ner, ner_batch[3])
+        loss_t2 = criterion(outputs_pos, pos_batch[3])
         
         # batches typically have != length so we weight the final loss accordingly
         ner_ratio = len(ner_batch)/total_data
@@ -122,8 +125,11 @@ for epoch in range(num_train_epochs):
         dev_ner_batch = tuple(t.to(device) for t in dev_ner_batch)
         dev_pos_batch = tuple(t.to(device) for t in dev_pos_batch)
         
-        dev_ner_inputs = {"input_ids": dev_ner_batch[0], "attention_mask": dev_ner_batch[1], "labels": dev_ner_batch[3]}
-        dev_pos_inputs = {"input_ids": dev_pos_batch[0], "attention_mask": dev_pos_batch[1], "labels": dev_pos_batch[3]}
+        # dev_ner_inputs = {"input_ids": dev_ner_batch[0], "attention_mask": dev_ner_batch[1], "labels": dev_ner_batch[3]}
+        # dev_pos_inputs = {"input_ids": dev_pos_batch[0], "attention_mask": dev_pos_batch[1], "labels": dev_pos_batch[3]}
+
+        dev_ner_inputs = {"input_ids": dev_ner_batch[0], "attention_mask": dev_ner_batch[1]}
+        dev_pos_inputs = {"input_ids": dev_pos_batch[0], "attention_mask": dev_pos_batch[1]}
 
         dev_ner_inputs["token_type_ids"] = dev_ner_batch[2]
         dev_pos_inputs["token_type_ids"] = dev_pos_batch[2]
@@ -131,8 +137,8 @@ for epoch in range(num_train_epochs):
         with torch.no_grad():
             dev_outputs_ner, dev_outputs_pos = model(dev_ner_inputs, dev_pos_inputs)
 
-        dev_loss_t1 = criterion(dev_outputs_ner, dev_ner_inputs["labels"])
-        dev_loss_t2 = criterion(dev_outputs_pos, dev_pos_inputs["labels"])
+        dev_loss_t1 = criterion(dev_outputs_ner, dev_ner_batch[3])
+        dev_loss_t2 = criterion(dev_outputs_pos, dev_pos_batch[3])
         
         # batches typically have != length so we weight the final loss accordingly
         dev_ner_ratio = len(dev_ner_batch)/dev_total_data
