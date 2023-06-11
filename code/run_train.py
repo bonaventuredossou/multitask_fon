@@ -104,10 +104,11 @@ for epoch in range(num_train_epochs):
         loss_t2 = criterion(outputs_pos, pos_batch[3])
         
         # batches typically have != length so we weight the final loss accordingly
-        # ner_ratio = len(ner_batch)/total_data
-        # pos_ratio = len(pos_batch)/total_data
+        ner_ratio = len(ner_batch)/total_data
+        pos_ratio = len(pos_batch)/total_data
 
-        loss = 0.5*loss_t1 + 0.5*loss_t2
+        loss = ner_ratio*loss_t1 + pos_ratio*loss_t2
+
         loss.backward()
         optimizer.step()
         
@@ -147,7 +148,7 @@ for epoch in range(num_train_epochs):
         # batches typically have != length so we weight the final loss accordingly
         dev_ner_ratio = len(dev_ner_batch)/dev_total_data
         dev_pos_ratio = len(dev_pos_batch)/dev_total_data
-        dev_loss = 0.5*dev_loss_t1 + 0.5*dev_loss_t2
+        dev_loss = dev_ner_ratio*dev_loss_t1 + dev_pos_ratio*dev_loss_t2
         epoch_dev_loss += dev_loss.item()
     
     epoch_dev_loss = epoch_dev_loss / dev_total_data
