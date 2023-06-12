@@ -3,7 +3,7 @@ from utils import *
 import torch
 from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader
-from transformers import XLMRobertaTokenizer, XLMRobertaModel
+from transformers import XLMRobertaTokenizer, XLMRobertaModel, XLMRobertaForMaskedLM
 import wandb
 
 wandb.init(project="multitask_fon")
@@ -22,19 +22,19 @@ num_labels_ner, num_labels_pos = len(labels_ner), len(labels_pos)
 # Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
 pad_token_label_id = CrossEntropyLoss().ignore_index
 
-hf_model_path = "xlm-roberta-large"
-hf_tokenizer_path = "xlm-roberta-large"
+# hf_model_path = "xlm-roberta-large"
+# hf_tokenizer_path = "xlm-roberta-large"
 
-hf_model_path2 = "bonadossou/afrolm_active_learning"
-hf_tokenizer_path2 = "bonadossou/afrolm_active_learning"
+hf_model_path = "bonadossou/afrolm_active_learning"
+hf_tokenizer_path = "bonadossou/afrolm_active_learning"
 
-encoder = XLMRobertaModel.from_pretrained(hf_model_path)
+encoder = XLMRobertaForMaskedLM.from_pretrained(hf_model_path)
 tokenizer = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path)
 
-tokenizer2 = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path2, model_max_length=256)
-encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
+# tokenizer2 = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path2, model_max_length=256)
+# encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
 
-models = [encoder, encoder2]
+# models = [encoder, encoder2]
 
 train_dataset_ner = load_ner_examples(
             ner_data, tokenizer, labels_ner, pad_token_label_id, mode="train")
@@ -70,7 +70,7 @@ for batches in zip(train_dataloader_ner, train_dataloader_pos):
     seq_length_pos = pos_batch[0].shape[-1]
     break
 
-model = MultiTaskModel(models, [num_labels_ner, num_labels_pos],
+model = MultiTaskModel(encoder, [num_labels_ner, num_labels_pos],
                        [seq_length_ner, seq_length_pos])
 model = to_device(model, num_gpus, device)
 

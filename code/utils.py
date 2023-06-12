@@ -265,19 +265,16 @@ class FonDataset(Dataset):
 
 # A simple MultiTask Model that uses a shared encoder (here an LM)
 class MultiTaskModel(torch.nn.Module):
-    def __init__(self, encoders, num_labels, sequence_lengths):
+    def __init__(self, encoder, num_labels, sequence_lengths):
         super(MultiTaskModel,self).__init__()
-        self.encoder1, self.encoder2 = encoders
+        self.encoder = encoder
         self.n_labels_task1, self.n_labels_task2 = num_labels
         self.seq_len_1, self.seq_len_2 = sequence_lengths
         
         self.dropout = torch.nn.Dropout(p=0.3)
-        
-        # maps to a lower dimension, outputs of XLMRoberta to an output acceptable by AfroLM
-        self.fc1_encoder1 = torch.nn.Linear(250002*256, 256)
-        
-        self.fc1 = torch.nn.Linear(768, self.seq_len_1)
-        self.fc2 = torch.nn.Linear(768, self.seq_len_2)
+                
+        self.fc1 = torch.nn.Linear(250002, self.seq_len_1)
+        self.fc2 = torch.nn.Linear(250002, self.seq_len_2)
         
         self.classifier_task1 = torch.nn.Linear(self.seq_len_1, self.n_labels_task1)
         self.classifier_task2 = torch.nn.Linear(self.seq_len_2, self.n_labels_task2)
@@ -286,20 +283,8 @@ class MultiTaskModel(torch.nn.Module):
     def forward(self, x1, x2):
         # Inputs of each task
         
-        x1_encoded = self.encoder1(**x1)['logits']
-        x1_encoded = x1_encoded.view(x1_encoded.shape[0], -1) # (bs, 256 * 250002) -> (bs, 256)
-
-        x2_encoded = self.encoder1(**x2)['logits']
-        x2_encoded = x2_encoded.view(x2_encoded.shape[0], -1) # (bs, 256 * 250002) -> (bs, 256)
-
-        first_representation_x1 = self.fc1_encoder1(x1_encoded) # (768, 256)
-        first_representation_x2 = self.fc1_encoder1(x2_encoded) # (768, 256)
-        
-        next_repr_x1 = {'input_ids': first_representation_x1, 'attention_mask': x1['attention_mask']}
-        next_repr_x2 = {'input_ids': first_representation_x2, 'attention_mask': x1['attention_mask']}
-
-        representation_x1 = self.encoder2(**next_repr_x1)['last_hidden_state']
-        representation_x2 = self.encoder2(**next_repr_x2)['last_hidden_state']
+        representation_x1 = self.encoder2(**x1)['logits']
+        representation_x2 = self.encoder2(**x1)['logits']
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))
