@@ -282,9 +282,9 @@ class MultiTaskModel(torch.nn.Module):
         
     def forward(self, x1, x2):
         # Inputs of each task
-        
-        representation_x1 = self.encoder2(**x1)['logits']
-        representation_x2 = self.encoder2(**x1)['logits']
+        # Using an LM head as encoder to build representations
+        representation_x1 = self.encoder(**x1)['logits']
+        representation_x2 = self.encoder(**x1)['logits']
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))
