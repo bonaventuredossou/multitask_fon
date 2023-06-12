@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=multitaskfon
-#SBATCH --gres=gpu:a100l:4
+#SBATCH --gres=gpu:a100l:8
 #SBATCH --cpus-per-gpu=24
-#SBATCH --mem=96G
+#SBATCH --mem=128G
 #SBATCH --time=168:00:00
 #SBATCH --partition=long
 #SBATCH --error=/home/mila/b/bonaventure.dossou/multitask_fon/slurmerror.txt
