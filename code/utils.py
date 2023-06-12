@@ -286,8 +286,8 @@ class MultiTaskModel(torch.nn.Module):
         representation_x1_lm1 = self.encoder1(**x1)['logits']
         representation_x2_lm1 = self.encoder1(**x2)['logits']
 
-        representation_x1_lm2 = self.encoder2(**x1)['logits']
-        representation_x2_lm2 = self.encoder2(**x2)['logits']
+        representation_x1_lm2 = self.encoder2(**x1)['last_hidden_state']
+        representation_x2_lm2 = self.encoder2(**x2)['last_hidden_state']
         
         # Merge representation from both encoders
         representation_x1 = representation_x1_lm1 + representation_x1_lm2
