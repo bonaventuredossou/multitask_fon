@@ -284,7 +284,7 @@ class MultiTaskModel(torch.nn.Module):
         # Inputs of each task
         # Using an LM head as encoder to build representations
         representation_x1 = self.encoder(**x1)['logits']
-        representation_x2 = self.encoder(**x1)['logits']
+        representation_x2 = self.encoder(**x2)['logits']
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))
