@@ -265,9 +265,9 @@ class FonDataset(Dataset):
 
 # A simple MultiTask Model that uses a shared encoder (here an LM)
 class MultiTaskModel(torch.nn.Module):
-    def __init__(self, encoder, num_labels, sequence_lengths):
+    def __init__(self, encoders, num_labels, sequence_lengths):
         super(MultiTaskModel,self).__init__()
-        self.encoder = encoder
+        self.encoder1, self.encoder2 = encoders
         self.n_labels_task1, self.n_labels_task2 = num_labels
         self.seq_len_1, self.seq_len_2 = sequence_lengths
         
@@ -282,9 +282,16 @@ class MultiTaskModel(torch.nn.Module):
         
     def forward(self, x1, x2):
         # Inputs of each task
-        # Using an LM head as encoder to build representations
-        representation_x1 = self.encoder(**x1)['logits']
-        representation_x2 = self.encoder(**x2)['logits']
+        # Using LM heads as encoders to build representations
+        representation_x1_lm1 = self.encoder1(**x1)['logits']
+        representation_x2_lm1 = self.encoder1(**x2)['logits']
+
+        representation_x1_lm2 = self.encoder2(**x1)['logits']
+        representation_x2_lm2 = self.encoder2(**x2)['logits']
+        
+        # Merge representation from both encoders
+        representation_x1 = representation_x1_lm1 + representation_x1_lm2
+        representation_x2 = representation_x2_lm1 + representation_x2_lm2
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))

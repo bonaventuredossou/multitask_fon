@@ -22,8 +22,8 @@ num_labels_ner, num_labels_pos = len(labels_ner), len(labels_pos)
 # Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
 pad_token_label_id = CrossEntropyLoss().ignore_index
 
-# hf_model_path = "xlm-roberta-large"
-# hf_tokenizer_path = "xlm-roberta-large"
+hf_model_path2 = "xlm-roberta-large"
+hf_tokenizer_path2 = "xlm-roberta-large"
 
 hf_model_path = "bonadossou/afrolm_active_learning"
 hf_tokenizer_path = "bonadossou/afrolm_active_learning"
@@ -31,10 +31,10 @@ hf_tokenizer_path = "bonadossou/afrolm_active_learning"
 encoder = XLMRobertaForMaskedLM.from_pretrained(hf_model_path)
 tokenizer = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path)
 
-# tokenizer2 = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path2, model_max_length=256)
-# encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
+tokenizer2 = XLMRobertaForMaskedLM.from_pretrained(hf_tokenizer_path2)
+encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
 
-# models = [encoder, encoder2]
+encoders = [encoder, encoder2]
 
 train_dataset_ner = load_ner_examples(
             ner_data, tokenizer, labels_ner, pad_token_label_id, mode="train")
@@ -70,12 +70,12 @@ for batches in zip(train_dataloader_ner, train_dataloader_pos):
     seq_length_pos = pos_batch[0].shape[-1]
     break
 
-model = MultiTaskModel(encoder, [num_labels_ner, num_labels_pos],
+model = MultiTaskModel(encoders, [num_labels_ner, num_labels_pos],
                        [seq_length_ner, seq_length_pos])
 model = to_device(model, num_gpus, device)
 
 num_train_epochs = 50
-learning_rate = 1e-5
+learning_rate = 3e-5
 
 print("***** Running training *****")
 print("Num examples NER = %d", len(train_dataset[0]))
@@ -111,8 +111,8 @@ for epoch in range(num_train_epochs):
         loss_t1 = criterion(outputs_ner, ner_batch[3])
         loss_t2 = criterion(outputs_pos, pos_batch[3])
         
-        ner_ratio = 0.5 # len(ner_batch)/total_data
-        pos_ratio = 0.5 # len(pos_batch)/total_data
+        ner_ratio = 1 # len(ner_batch)/total_data
+        pos_ratio = 1 # len(pos_batch)/total_data
 
         loss = ner_ratio*loss_t1 + pos_ratio*loss_t2
 
