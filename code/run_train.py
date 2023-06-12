@@ -31,8 +31,8 @@ hf_tokenizer_path = "bonadossou/afrolm_active_learning"
 encoder = XLMRobertaForMaskedLM.from_pretrained(hf_model_path)
 tokenizer = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path)
 
-tokenizer2 = XLMRobertaForMaskedLM.from_pretrained(hf_tokenizer_path2)
-encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
+tokenizer2 = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path2)
+encoder2 = XLMRobertaForMaskedLM.from_pretrained(hf_model_path2)
 
 encoders = [encoder, encoder2]
 
