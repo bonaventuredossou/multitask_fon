@@ -19,9 +19,15 @@ Toward Building a Multi-Task Learning Model for Fon Language
 
 # How to get started
 
-- Install required libraries: `pip install -r requirements.txt -q`
-- Move to the code folder: `cd code`
-- Run the training: `python run_train.py`
+- Run the training: `sbatch run.sh`
+
+This command will:
+    - Set up the environement
+    - Install required libraries: `pip install -r requirements.txt -q`
+    - Move to the code folder: `cd code`
+    - Run the training: `python run_train.py`
+
+
 
 # To be done
 
