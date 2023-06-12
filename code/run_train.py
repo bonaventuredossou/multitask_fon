@@ -22,11 +22,19 @@ num_labels_ner, num_labels_pos = len(labels_ner), len(labels_pos)
 # Use cross entropy ignore index as padding label id so that only real label ids contribute to the loss later
 pad_token_label_id = CrossEntropyLoss().ignore_index
 
-hf_model_path = "bonadossou/afrolm_active_learning"
-hf_tokenizer_path = "bonadossou/afrolm_active_learning"
+hf_model_path = "xlm-roberta-large"
+hf_tokenizer_path = "xlm-roberta-large"
 
-tokenizer = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path, model_max_length=256)
+hf_model_path2 = "bonadossou/afrolm_active_learning"
+hf_tokenizer_path2 = "bonadossou/afrolm_active_learning"
+
 encoder = XLMRobertaModel.from_pretrained(hf_model_path)
+tokenizer = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path)
+
+tokenizer2 = XLMRobertaTokenizer.from_pretrained(hf_tokenizer_path2, model_max_length=256)
+encoder2 = XLMRobertaModel.from_pretrained(hf_model_path2)
+
+models = [encoder, encoder2]
 
 train_dataset_ner = load_ner_examples(
             ner_data, tokenizer, labels_ner, pad_token_label_id, mode="train")
@@ -62,12 +70,12 @@ for batches in zip(train_dataloader_ner, train_dataloader_pos):
     seq_length_pos = pos_batch[0].shape[-1]
     break
 
-model = MultiTaskModel(encoder, [num_labels_ner, num_labels_pos],
+model = MultiTaskModel(models, [num_labels_ner, num_labels_pos],
                        [seq_length_ner, seq_length_pos])
 model = to_device(model, num_gpus, device)
 
 num_train_epochs = 50
-learning_rate = 5e-5
+learning_rate = 1e-5
 
 print("***** Running training *****")
 print("Num examples NER = %d", len(train_dataset[0]))
