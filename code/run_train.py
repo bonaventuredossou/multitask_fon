@@ -53,8 +53,8 @@ dev_dataset = [dev_dataset_ner, dev_dataset_pos]
 
 labels = [labels_ner, labels_pos]
 
-train_batch_size = 8
-dev_batch_size = 8
+train_batch_size = 4
+dev_batch_size = 4
 
 train_dataloader_ner = DataLoader(train_dataset[0], batch_size=train_batch_size*5, shuffle=True)
 train_dataloader_pos = DataLoader(train_dataset[1], shuffle=True, batch_size=train_batch_size)
@@ -83,7 +83,7 @@ print("Num examples POS = %d", len(train_dataset[1]))
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 criterion = torch.nn.CrossEntropyLoss(ignore_index=-100)
-best_dev_loss = 1000
+best_dev_loss = float('inf')
 
 for epoch in range(num_train_epochs):
     model.train()
@@ -153,8 +153,8 @@ for epoch in range(num_train_epochs):
         dev_loss_t2 = criterion(dev_outputs_pos, dev_pos_batch[3])
         
         # batches typically have != length so we weight the final loss accordingly
-        dev_ner_ratio = 0.5 # len(dev_ner_batch)/dev_total_data
-        dev_pos_ratio = 0.5 # len(dev_pos_batch)/dev_total_data
+        dev_ner_ratio = 1 # len(dev_ner_batch)/dev_total_data
+        dev_pos_ratio = 1 # len(dev_pos_batch)/dev_total_data
         
         dev_loss = dev_ner_ratio*dev_loss_t1 + dev_pos_ratio*dev_loss_t2
         epoch_dev_loss += dev_loss.item()

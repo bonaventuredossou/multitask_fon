@@ -290,8 +290,8 @@ class MultiTaskModel(torch.nn.Module):
         representation_x2_lm2 = self.encoder2(**x2)['logits']
         
         # Merge representation from both encoders
-        representation_x1 = representation_x1_lm1 + representation_x1_lm2
-        representation_x2 = representation_x2_lm1 + representation_x2_lm2
+        representation_x1 = representation_x1_lm1 * representation_x1_lm2
+        representation_x2 = representation_x2_lm1 * representation_x2_lm2
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))
