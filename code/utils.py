@@ -271,7 +271,7 @@ class MultiTaskModel(torch.nn.Module):
         self.n_labels_task1, self.n_labels_task2 = num_labels
         self.seq_len_1, self.seq_len_2 = sequence_lengths
         
-        self.dropout = torch.nn.Dropout(p=0.3)
+        self.dropout = torch.nn.Dropout(p=0.5)
                 
         self.fc1 = torch.nn.Linear(250002, self.seq_len_1)
         self.fc2 = torch.nn.Linear(250002, self.seq_len_2)
