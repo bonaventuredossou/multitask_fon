@@ -1,0 +1,17 @@
+name: multitaskfon
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pytorch
+  - pip
+  - pip:
+    - torchvision
+    - torchaudio
+    - numpy
+    - sentencepiece
+    - seqeval
+    - ptvsd
+    - wandb
+    - transformers

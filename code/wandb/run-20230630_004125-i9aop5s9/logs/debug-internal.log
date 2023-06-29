@@ -1,0 +1,106 @@
+2023-06-30 00:41:25,970 INFO    StreamThr :62906 [internal.py:wandb_internal():86] W&B internal server running at pid: 62906, started at: 2023-06-30 00:41:25.970331
+2023-06-30 00:41:25,971 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status
+2023-06-30 00:41:25,978 INFO    WriterThread:62906 [datastore.py:open_for_write():85] open: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/run-i9aop5s9.wandb
+2023-06-30 00:41:25,979 DEBUG   SenderThread:62906 [sender.py:send():369] send: header
+2023-06-30 00:41:26,013 DEBUG   SenderThread:62906 [sender.py:send():369] send: run
+2023-06-30 00:41:26,714 INFO    SenderThread:62906 [dir_watcher.py:__init__():211] watching files in: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files
+2023-06-30 00:41:26,714 INFO    SenderThread:62906 [sender.py:_start_run_threads():1100] run started: i9aop5s9 with start time 1688074885.973653
+2023-06-30 00:41:26,714 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: summary_record
+2023-06-30 00:41:26,716 INFO    SenderThread:62906 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-06-30 00:41:26,718 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: check_version
+2023-06-30 00:41:26,718 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: check_version
+2023-06-30 00:41:27,412 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: run_start
+2023-06-30 00:41:27,424 DEBUG   HandlerThread:62906 [system_info.py:__init__():31] System info init
+2023-06-30 00:41:27,424 DEBUG   HandlerThread:62906 [system_info.py:__init__():46] System info init done
+2023-06-30 00:41:27,424 INFO    HandlerThread:62906 [system_monitor.py:start():181] Starting system monitor
+2023-06-30 00:41:27,424 INFO    SystemMonitor:62906 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-06-30 00:41:27,424 INFO    HandlerThread:62906 [system_monitor.py:probe():201] Collecting system info
+2023-06-30 00:41:27,425 INFO    SystemMonitor:62906 [interfaces.py:start():190] Started cpu monitoring
+2023-06-30 00:41:27,426 DEBUG   HandlerThread:62906 [system_info.py:probe():195] Probing system
+2023-06-30 00:41:27,426 INFO    SystemMonitor:62906 [interfaces.py:start():190] Started disk monitoring
+2023-06-30 00:41:27,428 INFO    SystemMonitor:62906 [interfaces.py:start():190] Started gpuapple monitoring
+2023-06-30 00:41:27,430 INFO    SystemMonitor:62906 [interfaces.py:start():190] Started memory monitoring
+2023-06-30 00:41:27,431 INFO    SystemMonitor:62906 [interfaces.py:start():190] Started network monitoring
+2023-06-30 00:41:27,438 DEBUG   HandlerThread:62906 [system_info.py:_probe_git():180] Probing git
+2023-06-30 00:41:27,474 DEBUG   HandlerThread:62906 [system_info.py:_probe_git():188] Probing git done
+2023-06-30 00:41:27,474 DEBUG   HandlerThread:62906 [system_info.py:probe():240] Probing system done
+2023-06-30 00:41:27,474 DEBUG   HandlerThread:62906 [system_monitor.py:probe():210] {'os': 'macOS-13.4-arm64-arm-64bit', 'python': '3.9.16', 'heartbeatAt': '2023-06-29T21:41:27.426464', 'startedAt': '2023-06-29T21:41:25.949563', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/run_train.py', 'codePath': 'code/run_train.py', 'git': {'remote': 'git@github.com:bonaventuredossou/multitask_fon.git', 'commit': '1882052a426d6aec0a9c87009fb2797e721a0e95'}, 'email': 'hgilles06@yahoo.com', 'root': '/Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon', 'host': 'Gilless-MacBook-Pro.local', 'username': 'gillesquentinhacheme', 'executable': '/Users/gillesquentinhacheme/miniconda3/envs/multitaskfon/bin/python', 'cpu_count': 12, 'cpu_count_logical': 12, 'disk': {'total': 926.3517189025879, 'used': 93.34322738647461}, 'gpuapple': {'type': 'arm', 'vendor': 'Apple'}, 'memory': {'total': 64.0}}
+2023-06-30 00:41:27,474 INFO    HandlerThread:62906 [system_monitor.py:probe():211] Finished collecting system info
+2023-06-30 00:41:27,474 INFO    HandlerThread:62906 [system_monitor.py:probe():214] Publishing system info
+2023-06-30 00:41:27,474 DEBUG   HandlerThread:62906 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-06-30 00:41:27,475 DEBUG   HandlerThread:62906 [system_info.py:_save_pip():67] Saving pip packages done
+2023-06-30 00:41:27,475 DEBUG   HandlerThread:62906 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-06-30 00:41:27,719 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/requirements.txt
+2023-06-30 00:41:27,720 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/conda-environment.yaml
+2023-06-30 00:41:27,720 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/wandb-summary.json
+2023-06-30 00:41:32,585 DEBUG   HandlerThread:62906 [system_info.py:_save_conda():86] Saving conda packages done
+2023-06-30 00:41:32,586 INFO    HandlerThread:62906 [system_monitor.py:probe():216] Finished publishing system info
+2023-06-30 00:41:32,591 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:32,591 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: keepalive
+2023-06-30 00:41:32,592 DEBUG   SenderThread:62906 [sender.py:send():369] send: files
+2023-06-30 00:41:32,592 INFO    SenderThread:62906 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-06-30 00:41:32,594 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:41:32,595 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:41:32,734 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/conda-environment.yaml
+2023-06-30 00:41:32,734 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/wandb-metadata.json
+2023-06-30 00:41:32,869 DEBUG   SenderThread:62906 [sender.py:send():369] send: telemetry
+2023-06-30 00:41:33,739 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_created():272] file/dir created: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/output.log
+2023-06-30 00:41:33,834 INFO    wandb-upload_0:62906 [upload_job.py:push():133] Uploaded file /var/folders/x0/cb0jh7r153j520n5c2g8gnbw0000gn/T/tmpozbvd_l9wandb/q9id43dq-wandb-metadata.json
+2023-06-30 00:41:35,747 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/output.log
+2023-06-30 00:41:36,888 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:41,911 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:47,676 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:41:47,687 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:47,717 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:41:47,889 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/output.log
+2023-06-30 00:41:49,888 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/output.log
+2023-06-30 00:41:52,839 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:57,863 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:41:58,927 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/config.yaml
+2023-06-30 00:42:02,661 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:42:02,662 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:42:03,940 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:08,945 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:13,965 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:17,660 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:42:17,660 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:42:19,965 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:24,990 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:27,471 DEBUG   SystemMonitor:62906 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-06-30 00:42:27,863 DEBUG   SenderThread:62906 [sender.py:send():369] send: telemetry
+2023-06-30 00:42:27,863 DEBUG   SenderThread:62906 [sender.py:send():369] send: stats
+2023-06-30 00:42:30,880 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:32,097 INFO    Thread-12 :62906 [dir_watcher.py:_on_file_modified():289] file/dir modified: /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/wandb/run-20230630_004125-i9aop5s9/files/config.yaml
+2023-06-30 00:42:32,675 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:42:32,675 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:42:36,974 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:41,995 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:47,016 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:47,671 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:42:47,671 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:42:52,984 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:42:57,868 DEBUG   SenderThread:62906 [sender.py:send():369] send: stats
+2023-06-30 00:42:58,873 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:02,676 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:43:02,676 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:43:03,931 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:09,015 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:14,038 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:17,681 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:43:17,681 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:43:19,969 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:24,991 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:27,869 DEBUG   SenderThread:62906 [sender.py:send():369] send: stats
+2023-06-30 00:43:30,878 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:32,685 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:43:32,686 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:43:35,958 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:40,983 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:46,014 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: status_report
+2023-06-30 00:43:47,707 DEBUG   HandlerThread:62906 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-30 00:43:47,707 DEBUG   SenderThread:62906 [sender.py:send_request():396] send_request: stop_status
+2023-06-30 00:43:48,281 INFO    memory    :62906 [interfaces.py:monitor():140] Process proc.memory.rssMB has exited.
+2023-06-30 00:43:48,281 DEBUG   SystemMonitor:62906 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-06-30 00:43:48,281 DEBUG   SystemMonitor:62906 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-06-30 00:43:48,282 DEBUG   SenderThread:62906 [sender.py:send():369] send: stats
+2023-06-30 00:43:49,438 INFO    MainThread:62906 [internal.py:handle_exit():76] Internal process exited
