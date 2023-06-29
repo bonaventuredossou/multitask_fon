@@ -130,6 +130,7 @@ class MultitaskFON:
                     ner_weight = torch.tensor(ner_weight, requires_grad=True).to(self.device)
                     pos_weight = 1 - ner_weight
                     wandb.log({"ner_weight": ner_weight, "epoch": epoch + 1})
+                    wandb.log({"pos_weight": pos_weight, "epoch": epoch + 1})
 
                 optimizer.step()
                 optimizer.zero_grad()
