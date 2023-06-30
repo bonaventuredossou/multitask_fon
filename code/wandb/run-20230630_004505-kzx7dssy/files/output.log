@@ -4968,3 +4968,8 @@ Num examples POS = %d 810
  ['Ényɔ́', 'wàtɔ́', 'xéɖé', 'xéɖé', 'lɛ́ɛ', 'wɛ', 'è', 'sɔ́', 'ɖo', 'ali', 'kɔlɛ́wà', 'hɔ̀nmɛ̀nǔ', 'mitɔn', 'é', 'ɖo', 'fí', 'vòvò', 'gègè', 'ɖo', 'France', 'dɔn', 'lɛ́ɛ', 'èe', 'nù', 'ée', 'è', 'byɔ̀', 'nǔ', 'énɛ́', 'lɛ́ɛ', 'yě', 'gùdó', 'ɖo', 'azǎn', '26ɔ́', 'xwè', '2016ɔ́', 'tɔn', 'gbè', '.']
  ['È', 'kó', 'dlɛ́n', 'azɔ̌', 'èe', 'ɖo', 'tè', 'kpɔ́n', 'gbɛ̀tà', 'énɛ́', 'èe', 'sín', 'ali', '.']
 /Users/gillesquentinhacheme/Documents/Perso/Projects/Fon/multitask_fon/code/run_train.py:130: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  ner_weight = torch.tensor(ner_weight, requires_grad=True).to(self.device)
+ ['È', 'kó', 'dlɛ́n', 'azɔ̌', 'èe', 'ɖo', 'tè', 'kpɔ́n', 'gbɛ̀tà', 'énɛ́', 'èe', 'sín', 'ali', '.']
+ ['È', 'kó', 'dlɛ́n', 'azɔ̌', 'èe', 'ɖo', 'tè', 'kpɔ́n', 'gbɛ̀tà', 'énɛ́', 'èe', 'sín', 'ali', '.']
+ ['È', 'kó', 'dlɛ́n', 'azɔ̌', 'èe', 'ɖo', 'tè', 'kpɔ́n', 'gbɛ̀tà', 'énɛ́', 'èe', 'sín', 'ali', '.']
+ ['È', 'kó', 'dlɛ́n', 'azɔ̌', 'èe', 'ɖo', 'tè', 'kpɔ́n', 'gbɛ̀tà', 'énɛ́', 'èe', 'sín', 'ali', '.']
