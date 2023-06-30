@@ -69,7 +69,6 @@ class MultitaskFON:
             ner_batch, pos_batch = batches
             seq_length_ner = ner_batch[0].shape[-1]
             seq_length_pos = pos_batch[0].shape[-1]
-            break#####################################
 
         self.model = MultiTaskModel(self.encoders, [self.num_labels_ner, self.num_labels_pos], [seq_length_ner, seq_length_pos])
         self.model = to_device(self.model, self.num_gpus, self.device)
@@ -183,7 +182,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Multitask FON')
     parser.add_argument('--labels_ner_path', type=str, help='file path to label file for NER task')
     parser.add_argument('--labels_pos_path', type=str, help='file path to label file for POS task')
-    parser.add_argument('--train_batch_size', type=int, default=8, help='training batch size')
+    parser.add_argument('--train_batch_size', type=int, default=16, help='training batch size')
     parser.add_argument('--dev_batch_size', type=int, default=8, help='testing batch size')
     parser.add_argument('--epochs', type=int, default=50, help='number of epochs')
     parser.add_argument('--learning_rate', type=float, default=3e-5, help='learning rate')
