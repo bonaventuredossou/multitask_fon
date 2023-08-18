@@ -231,14 +231,14 @@ class MultitaskFON:
                 ner_label_ids = test_ner_batch[3].detach().cpu().numpy()
             else:
                 ner_preds = np.append(ner_preds, test_outputs_ner.detach().cpu().numpy(), axis=0)
-                ner_label_ids = np.append(ner_label_ids, test_ner_batch[3]["labels"].detach().cpu().numpy(), axis=0)
+                ner_label_ids = np.append(ner_label_ids, test_ner_batch[3].detach().cpu().numpy(), axis=0)
 
             if pos_preds is None:
                 pos_preds = test_outputs_pos.detach().cpu().numpy()
                 pos_label_ids = test_pos_batch[3].detach().cpu().numpy()
             else:
                 pos_preds = np.append(pos_preds, test_outputs_pos.detach().cpu().numpy(), axis=0)
-                pos_label_ids = np.append(pos_label_ids, test_pos_batch[3]["labels"].detach().cpu().numpy(), axis=0)
+                pos_label_ids = np.append(pos_label_ids, test_pos_batch[3].detach().cpu().numpy(), axis=0)
 
         ner_preds = np.argmax(ner_preds, axis=2)
         pos_preds = np.argmax(pos_preds, axis=2)
