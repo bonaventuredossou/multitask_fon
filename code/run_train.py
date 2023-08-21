@@ -4,7 +4,7 @@ import torch
 from torch.nn import CrossEntropyLoss
 from seqeval.metrics import f1_score, precision_score, recall_score, classification_report
 from torch.utils.data import DataLoader
-from transformers import XLMRobertaTokenizer, XLMRobertaModel, XLMRobertaForMaskedLM, AutoTokenizer, AutoModel
+from transformers import XLMRobertaTokenizer, XLMRobertaForMaskedLM
 
 import wandb
 import argparse
