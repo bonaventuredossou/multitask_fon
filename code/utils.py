@@ -265,11 +265,12 @@ class FonDataset(Dataset):
 
 # A simple MultiTask Model that uses a shared encoder (here an LM)
 class MultiTaskModel(torch.nn.Module):
-    def __init__(self, encoders, num_labels, sequence_lengths):
+    def __init__(self, encoders, num_labels, sequence_lengths, merging_type):
         super(MultiTaskModel,self).__init__()
         self.encoder1, self.encoder2 = encoders
         self.n_labels_task1, self.n_labels_task2 = num_labels
         self.seq_len_1, self.seq_len_2 = sequence_lengths
+        self.merging_type = merging_type
         
         self.dropout = torch.nn.Dropout(p=0.5)
                 
@@ -289,9 +290,15 @@ class MultiTaskModel(torch.nn.Module):
         representation_x1_lm2 = self.encoder2(**x1)['logits']
         representation_x2_lm2 = self.encoder2(**x2)['logits']
         
-        # Merge representation from both encoders
-        representation_x1 = representation_x1_lm1 * representation_x1_lm2
-        representation_x2 = representation_x2_lm1 * representation_x2_lm2
+        # Merge representation from both encoders and shared layers
+        if self.args.type_encoder_merging == 'additive':
+            # concat representation from both LM heads in a multiplicative way
+            representation_x1 = representation_x1_lm1 + representation_x1_lm2
+            representation_x2 = representation_x2_lm1 + representation_x2_lm2
+        else:
+            # concat representation from both LM heads in a multiplicative way
+            representation_x1 = representation_x1_lm1 * representation_x1_lm2
+            representation_x2 = representation_x2_lm1 * representation_x2_lm2
         
         representation_x1 = self.fc1(self.dropout(representation_x1))
         representation_x2 = self.fc2(self.dropout(representation_x2))

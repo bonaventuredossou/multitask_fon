@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=multitaskfon
-#SBATCH --gres=gpu:a100l:8
-#SBATCH --cpus-per-gpu=16
+#SBATCH --gres=gpu:rtx8000:8
+#SBATCH --cpus-per-gpu=8
 #SBATCH --mem=128G
 #SBATCH --time=168:00:00
 #SBATCH --partition=long

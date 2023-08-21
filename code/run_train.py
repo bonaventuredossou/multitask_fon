@@ -16,6 +16,8 @@ class MultitaskFON:
         self.num_gpus = [i for i in range(torch.cuda.device_count())]
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print("device: ", self.device)
+        
+        self.merging_type = args.merging_type
 
         if len(self.num_gpus) > 1:
             print("Let's use", len(self.num_gpus), "GPUs!")
@@ -41,22 +43,23 @@ class MultitaskFON:
         self.pad_token_label_id = CrossEntropyLoss().ignore_index
 
         # Load the model
-        self.encoder_ner = XLMRobertaForMaskedLM.from_pretrained(args.hf_model_path_ner)
-        self.tokenizer_ner = XLMRobertaTokenizer.from_pretrained(args.hf_tokenizer_path_ner)
+        self.encoder_1 = XLMRobertaForMaskedLM.from_pretrained(args.hf_encoder_model_1_path)
+        self.encoder_2 = XLMRobertaForMaskedLM.from_pretrained(args.hf_encoder_model_2_path)
+        # self.tokenizer_2 = XLMRobertaTokenizer.from_pretrained(args.hf_model_2_tokenizer_path)
+        
+        # Using a sole tokenizer (AfroLM): it was pretrained on all languages of the datasets, while XLMR was
+        # so intuitively we think it would provide a better representation
+        self.tokenizer = XLMRobertaTokenizer.from_pretrained(args.hf_tokenizer_path)
+        self.encoders = [self.encoder_1, self.encoder_2]
 
-        self.encoder_pos = XLMRobertaForMaskedLM.from_pretrained(args.hf_model_path_pos)
-        self.tokenizer_pos = XLMRobertaTokenizer.from_pretrained(args.hf_tokenizer_path_pos)
+        self.train_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer, self.labels_ner, self.pad_token_label_id, mode="train")
+        self.train_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer, self.labels_pos, self.pad_token_label_id, mode="train")
 
-        self.encoders = [self.encoder_ner, self.encoder_pos]
+        self.dev_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer, self.labels_ner, self.pad_token_label_id, mode="dev")
+        self.dev_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer, self.labels_pos, self.pad_token_label_id, mode="dev")
 
-        self.train_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer_ner, self.labels_ner, self.pad_token_label_id, mode="train")
-        self.train_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer_pos, self.labels_pos, self.pad_token_label_id, mode="train")
-
-        self.dev_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer_ner, self.labels_ner, self.pad_token_label_id, mode="dev")
-        self.dev_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer_pos, self.labels_pos, self.pad_token_label_id, mode="dev")
-
-        self.test_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer_ner, self.labels_ner, self.pad_token_label_id, mode="test")
-        self.test_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer_pos, self.labels_pos, self.pad_token_label_id, mode="test")
+        self.test_dataset_ner = load_ner_examples(self.ner_data, self.tokenizer, self.labels_ner, self.pad_token_label_id, mode="test")
+        self.test_dataset_pos = load_pos_examples(self.pos_data, self.tokenizer, self.labels_pos, self.pad_token_label_id, mode="test")
 
         self.train_dataset = [self.train_dataset_ner, self.train_dataset_pos]
         self.dev_dataset = [self.dev_dataset_ner, self.dev_dataset_pos]
@@ -88,7 +91,7 @@ class MultitaskFON:
         self.seq_length_ner = seq_length_ner
         self.seq_length_pos = seq_length_pos
 
-        self.model = MultiTaskModel(self.encoders, [self.num_labels_ner, self.num_labels_pos], [seq_length_ner, seq_length_pos])
+        self.model = MultiTaskModel(self.encoders, [self.num_labels_ner, self.num_labels_pos], [seq_length_ner, seq_length_pos], self.merging_type)
         self.model = to_device(self.model, self.num_gpus, self.device)
 
         self.num_train_epochs = args.epochs
@@ -299,12 +302,13 @@ if __name__ == "__main__":
     parser.add_argument('--test_batch_size', type=int, default=4, help='testing batch size')
     parser.add_argument('--epochs', type=int, default=50, help='number of epochs')
     parser.add_argument('--learning_rate', type=float, default=3e-5, help='learning rate')
-    parser.add_argument('--hf_model_path_ner', type=str, default="bonadossou/afrolm_active_learning", help='Hugging Face encoder model path')
-    parser.add_argument('--hf_model_path_pos', type=str, default="xlm-roberta-large", help='Hugging Face encoder model path')
-    parser.add_argument('--hf_tokenizer_path_ner', type=str, default="bonadossou/afrolm_active_learning", help='Hugging Face tokenizer path')
-    parser.add_argument('--hf_tokenizer_path_pos', type=str, default="xlm-roberta-large", help='Hugging Face tokenizer path')
+    parser.add_argument('--hf_encoder_model_1_path', type=str, default="bonadossou/afrolm_active_learning", help='Hugging Face encoder model path')
+    parser.add_argument('--hf_encoder_model_2_path', type=str, default="xlm-roberta-large", help='Hugging Face encoder model path')
+    parser.add_argument('--hf_tokenizer_path', type=str, default="bonadossou/afrolm_active_learning", help='Hugging Face tokenizer path')  
+    # parser.add_argument('--hf_model_2_tokenizer_path', type=str, default="xlm-roberta-large", help='Hugging Face tokenizer path')
     parser.add_argument('--dynamic_weighting', action='store_true', help='dynamic weighting')
     parser.add_argument('--fon_only', type=bool, default=False, help='train only on fon or on all languages data')
+    parser.add_argument('--merging_type', type=str, default='multiplicative', help='parameter deciding on how to merge the representations from both shared encoder')
 
     args = parser.parse_args()
     mt_fon = MultitaskFON(args)
