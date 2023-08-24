@@ -291,7 +291,7 @@ class MultiTaskModel(torch.nn.Module):
         representation_x2_lm2 = self.encoder2(**x2)['logits']
         
         # Merge representation from both encoders and shared layers
-        if self.args.type_encoder_merging == 'additive':
+        if self.merging_type == 'additive':
             # concat representation from both LM heads in a multiplicative way
             representation_x1 = representation_x1_lm1 + representation_x1_lm2
             representation_x2 = representation_x2_lm1 + representation_x2_lm2
