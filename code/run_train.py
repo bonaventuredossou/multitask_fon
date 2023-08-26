@@ -97,6 +97,11 @@ class MultitaskFON:
         self.num_train_epochs = args.epochs
         self.learning_rate = args.learning_rate
 
+        if args.fon_only:
+            self.model_path = 'multitask_model_fon_only.bin'
+        else:
+            self.model_path = 'multitask_model_fon.bin'
+
 
     def train(self):         
         print("***** Running training *****")
@@ -191,8 +196,7 @@ class MultitaskFON:
 
             if epoch_dev_loss < best_dev_loss:
                 best_dev_loss = epoch_dev_loss
-                path = 'multitask_model_fon.bin'
-                torch.save(self.model.state_dict(), path)
+                torch.save(self.model.state_dict(), self.model_path)
 
             print("Epoch {}'s validation loss: {}".format(epoch + 1, epoch_dev_loss))
         print('Best validation loss: {}'.format(best_dev_loss))
@@ -205,7 +209,7 @@ class MultitaskFON:
         model = MultiTaskModel(self.encoders, [self.num_labels_ner, self.num_labels_pos],
                                [self.seq_length_ner, self.seq_length_pos])
         model = to_device(model, self.num_gpus, self.device)
-        model.load_state_dict(torch.load('multitask_model_fon.bin'))
+        model.load_state_dict(torch.load(self.model_path))
         model.eval()
 
         ner_preds = None
