@@ -224,14 +224,14 @@ class MultitaskFON:
             test_ner_batch = tuple(t.to(self.device) for t in test_ner_batch)
             test_pos_batch = tuple(t.to(self.device) for t in test_pos_batch)
 
-            test_ner_batch = {"input_ids": test_ner_batch[0], "attention_mask": test_ner_batch[1]}
-            test_pos_batch = {"input_ids": test_pos_batch[0], "attention_mask": test_pos_batch[1]}
+            test_ner_inputs = {"input_ids": test_ner_batch[0], "attention_mask": test_ner_batch[1]}
+            test_pos_inputs = {"input_ids": test_pos_batch[0], "attention_mask": test_pos_batch[1]}
 
-            test_ner_batch["token_type_ids"] = test_ner_batch[2]
-            test_pos_batch["token_type_ids"] = test_pos_batch[2]
+            test_ner_inputs["token_type_ids"] = test_ner_batch[2]
+            test_pos_inputs["token_type_ids"] = test_pos_batch[2]
 
             with torch.no_grad():
-                test_outputs_ner, test_outputs_pos = model(test_ner_batch, test_pos_batch)
+                test_outputs_ner, test_outputs_pos = model(test_ner_inputs, test_pos_inputs)
 
             if ner_preds is None:
                 ner_preds = test_outputs_ner.detach().cpu().numpy()
