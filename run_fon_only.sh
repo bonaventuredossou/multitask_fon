@@ -15,4 +15,4 @@ source /home/mila/b/bonaventure.dossou/env/bin/activate
 cd /home/mila/b/bonaventure.dossou/multitask_fon
 pip install -r requirements.txt
 cd code
-python run_train.py --fon_only True
+python run_train.py --fon_only True --merging_type additive

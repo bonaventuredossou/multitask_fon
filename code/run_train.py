@@ -97,11 +97,7 @@ class MultitaskFON:
         self.num_train_epochs = args.epochs
         self.learning_rate = args.learning_rate
 
-        if args.fon_only:
-            self.model_path = 'multitask_model_fon_only.bin'
-        else:
-            self.model_path = 'multitask_model_fon.bin'
-
+        self.model_path = 'multitask_model_fon_{}_{}.bin'.format(args.fon_only, args.merging_type)
 
     def train(self):         
         print("***** Running training *****")
@@ -320,10 +316,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     mt_fon = MultitaskFON(args)
 
-    if args.fon_only:
-        model_path = 'multitask_model_fon_only.bin'
-    else:
-        model_path = 'multitask_model_fon.bin'
+    model_path = 'multitask_model_fon_{}_{}.bin'.format(args.fon_only, args.merging_type)
+
     if os.path.exists(model_path):
         mt_fon.test()
     else:
