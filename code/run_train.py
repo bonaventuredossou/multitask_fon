@@ -280,7 +280,7 @@ class MultitaskFON:
         }
 
         pos_results = {
-        "accuracy": accuracy_score(ner_label_list, ner_preds_list),
+        "accuracy": accuracy_score(pos_label_list, pos_preds_list),
         "precision": precision_score(pos_label_list, pos_preds_list),
         "recall": recall_score(pos_label_list, pos_preds_list),
         "f1": f1_score(pos_label_list, pos_preds_list),
