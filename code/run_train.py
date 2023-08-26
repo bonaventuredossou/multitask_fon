@@ -2,7 +2,7 @@ import os
 from utils import *
 import torch
 from torch.nn import CrossEntropyLoss
-from seqeval.metrics import f1_score, precision_score, recall_score, classification_report
+from seqeval.metrics import f1_score, precision_score, recall_score, classification_report, accuracy_score
 from torch.utils.data import DataLoader
 from transformers import XLMRobertaTokenizer, XLMRobertaForMaskedLM
 
@@ -247,8 +247,8 @@ class MultitaskFON:
                 pos_preds = np.append(pos_preds, test_outputs_pos.detach().cpu().numpy(), axis=0)
                 pos_label_ids = np.append(pos_label_ids, test_pos_batch[3].detach().cpu().numpy(), axis=0)
 
-        ner_preds = np.argmax(ner_preds, axis=2)
-        pos_preds = np.argmax(pos_preds, axis=2)
+        ner_preds = np.argmax(ner_preds, axis=1)
+        pos_preds = np.argmax(pos_preds, axis=1)
 
         ner_label_map = {i: label for i, label in enumerate(self.labels_ner)}
         pos_label_map = {i: label for i, label in enumerate(self.labels_pos)}
@@ -272,6 +272,7 @@ class MultitaskFON:
                     pos_preds_list[i].append(pos_label_map[pos_preds[i][j]])
 
         ner_results = {
+        "accuracy": accuracy_score(ner_label_list, ner_preds_list),
         "precision": precision_score(ner_label_list, ner_preds_list),
         "recall": recall_score(ner_label_list, ner_preds_list),
         "f1": f1_score(ner_label_list, ner_preds_list),
@@ -279,6 +280,7 @@ class MultitaskFON:
         }
 
         pos_results = {
+        "accuracy": accuracy_score(ner_label_list, ner_preds_list),
         "precision": precision_score(pos_label_list, pos_preds_list),
         "recall": recall_score(pos_label_list, pos_preds_list),
         "f1": f1_score(pos_label_list, pos_preds_list),
