@@ -207,7 +207,7 @@ class MultitaskFON:
         print("Num examples POS = %d", len(self.test_dataset[1]))
 
         model = MultiTaskModel(self.encoders, [self.num_labels_ner, self.num_labels_pos],
-                               [self.seq_length_ner, self.seq_length_pos])
+                               [self.seq_length_ner, self.seq_length_pos], self.merging_type)
         model = to_device(model, self.num_gpus, self.device)
         model.load_state_dict(torch.load(self.model_path))
         model.eval()
@@ -285,13 +285,14 @@ class MultitaskFON:
         'report': classification_report(pos_label_list, pos_preds_list)
         }
 
-        with open('mtl_fon_ner_results.txt', "w") as ner_writer:
+
+        with open('mtl_fon_ner_results_{}.txt'.format(self.args.fon_only), "w") as ner_writer:
             for key in sorted(ner_results.keys()):
                 ner_writer.write("{} = {}\n".format(key, str(ner_results[key])))
 
         ner_writer.close()
 
-        with open('mtl_fon_pos_results.txt', "w") as pos_writer:
+        with open('mtl_fon_pos_results_{}.txt'.format(self.args.fon_only), "w") as pos_writer:
             for key in sorted(pos_results.keys()):
                 pos_writer.write("{} = {}\n".format(key, str(pos_results[key])))
         
@@ -317,5 +318,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     mt_fon = MultitaskFON(args)
 
-    mt_fon.train()
-    mt_fon.test()
+    if args.fon_only:
+        model_path = 'multitask_model_fon_only.bin'
+    else:
+        model_path = 'multitask_model_fon.bin'
+    if os.path.exists(model_path):
+        mt_fon.test()
+    else:
+        mt_fon.train()
+        mt_fon.test()
