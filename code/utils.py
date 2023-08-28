@@ -399,6 +399,7 @@ class EarlyStopping:
 
         if self.best_score is None:
             self.best_score = score
+            self.display(val_loss)
 
         elif score < self.best_score + self.delta:
             self.counter += 1
@@ -408,9 +409,10 @@ class EarlyStopping:
         else:
             self.best_score = score
             self.counter = 0
+            self.display(val_loss)
 
     def display(self, val_loss):
-        '''Saves model when validation loss decrease.'''
+        '''Display a message when validation loss decrease.'''
         if self.verbose:
             self.trace_func(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f})')
         self.val_loss_min = val_loss
