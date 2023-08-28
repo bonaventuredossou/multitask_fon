@@ -18,6 +18,7 @@ class MultitaskFON:
         print("device: ", self.device)
         
         self.merging_type = args.merging_type
+        self.early_stopping_patience = args.early_stopping_patience
 
         if len(self.num_gpus) > 1:
             print("Let's use", len(self.num_gpus), "GPUs!")
@@ -98,6 +99,7 @@ class MultitaskFON:
         self.learning_rate = args.learning_rate
 
         self.model_path = 'multitask_model_fon_{}_{}.bin'.format(args.fon_only, args.merging_type)
+        self.early_stopping = EarlyStopping(patience=self.early_stopping_patience, path=self.model_path)
 
     def train(self):         
         print("***** Running training *****")
@@ -195,6 +197,13 @@ class MultitaskFON:
                 torch.save(self.model.state_dict(), self.model_path)
 
             print("Epoch {}'s validation loss: {}".format(epoch + 1, epoch_dev_loss))
+
+            self.early_stopping(epoch_dev_loss)
+
+            if self.early_stopping.early_stop:
+                print("Early stopping")
+            break
+        
         print('Best validation loss: {}'.format(best_dev_loss))
 
     def test(self):         
@@ -312,6 +321,7 @@ if __name__ == "__main__":
     parser.add_argument('--dynamic_weighting', action='store_true', help='dynamic weighting')
     parser.add_argument('--fon_only', type=bool, default=False, help='train only on fon or on all languages data')
     parser.add_argument('--merging_type', type=str, default='multiplicative', help='parameter deciding on how to merge the representations from both shared encoder')
+    parser.add_argument('--early_stopping_patience', type=int, default=20, help='early stopping patience')
 
     args = parser.parse_args()
     mt_fon = MultitaskFON(args)
