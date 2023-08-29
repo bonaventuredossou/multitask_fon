@@ -54,7 +54,7 @@ Model | Task | Pretraining/Finetuning Dataset | Pretraining/Finetuning Language(
 
 # Model End-Points
 
-- [`multitask_model_fon_False_multiplicative.bin`](https://huggingface.co/bonadossou/multitask-learning-fon-true-multiplicative) is the MTL Fon Model which has been pre-trained on all MasakhaNER 2.0 and MasakhaPOS datasets, and merging representations in a multiplicative way.
+- [`multitask_model_fon_False_multiplicative.bin`](https://huggingface.co/bonadossou/multitask_model_fon_False_multiplicative) is the MTL Fon Model which has been pre-trained on all MasakhaNER 2.0 and MasakhaPOS datasets, and merging representations in a multiplicative way.
 
 - [`multitask_model_fon_True_multiplicative.bin`](https://huggingface.co/bonadossou/multitask-learning-fon-true-multiplicative) is the MTL Fon Model which has been pre-trained only on Fon data from the MasakhaNER 2.0 and MasakhaPOS datasets, and merging representations in a multiplicative way.
 
