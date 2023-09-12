@@ -52,6 +52,22 @@ Model | Task | Pretraining/Finetuning Dataset | Pretraining/Finetuning Language(
 `MTL Weighted (ours)` | Multi-Task | MasakhaNER 2.0 & MasakhaPOS | All | FON POS | Accuracy | 89.20 |
 `MTL Weighted (ours)` | Multi-Task | MasakhaNER 2.0 & MasakhaPOS | Fon Data | FON POS | Accuracy | 80.85 |
 
+# Importance of Merging Representation Type
+
+Merging Type | Models | Task | Metric | Metric's Value |
+| :---: | :---: | :---: | :---: | :---: |
+Multiplicative | MTL Weighted (multi-task; ours; *) | NER | F1-Score | **81.92** |
+Multiplicative | MTL Weighted (multi-task; ours; +) | NER | F1-Score | 64.43 |
+| :---: | :---: | :---: | :---: | :---:|
+Multiplicative | MTL Weighted (multi-task; ours; *) | POS | Accuracy | **89.20** |
+Multiplicative & MTL Weighted (multi-task; ours; +) | POS | Accuracy | 80.85 | 
+| :---: | :---: | :---: | :---: | :---: |
+Additive | MTL Weighted (multi-task; ours; *) | NER | F1-Score | 78.91 |
+Additive | MTL Weighted (multi-task; ours; +) | NER | F1-Score | 60.93 |
+| :---: | :---: | :---: | :---: | :---: |
+Additive | MTL Weighted (multi-task; ours; *) | POS | Accuracy | 86.99 |
+Additive | MTL Weighted (multi-task; ours; +) | POS | Accuracy | 78.25 |
+
 # Model End-Points
 
 - [`multitask_model_fon_False_multiplicative.bin`](https://huggingface.co/bonadossou/multitask_model_fon_False_multiplicative) is the MTL Fon Model which has been pre-trained on all MasakhaNER 2.0 and MasakhaPOS datasets, and merging representations in a multiplicative way.
