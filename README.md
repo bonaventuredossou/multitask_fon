@@ -1,4 +1,6 @@
-Toward Building a Multi-Task Learning Model for Fon Language, accepted at WiNLP@EMNLP2023
+- Paper: [`FonMTL: Toward Building a Multi-Task Learning Model for Fon Language`](https://arxiv.org/abs/2308.14280), accepted at WiNLP co-located at EMNLP 2023
+
+- Official Github: https://github.com/bonaventuredossou/multitask_fon
 
 - Build Multi-task Learning Model: For the shared layers (encoders) we used the following language model heads:
 
