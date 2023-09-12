@@ -80,6 +80,4 @@ Additive | MTL Weighted (multi-task; ours; +) | POS | Accuracy | 78.25 |
  To run inference with the model(s), you can use the [testing block](https://github.com/bonaventuredossou/multitask_fon/blob/main/code/run_train.py#L209) defined in our MultitaskFON class.
 
  # TODO
-
- - leverage the impact of merging representations in an `additive way` (currently in exploration/running)
  - leverage the impact of `the dynamic weighted average loss`
